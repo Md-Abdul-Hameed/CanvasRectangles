@@ -1,0 +1,94 @@
+body {
+  margin: 0;
+  box-sizing: border-box;
+  background-color: rgb(242, 242, 242);
+}
+
+.beginner {
+  position: absolute;
+  top: 50%;
+  left: 20%;
+  font-size: 40px;
+  font-weight: 200;
+  color: tomato;
+  text-shadow: 3px 3px 6px rgba(150, 150, 150, 1);
+}
+
+nav {
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  height: 4vh;
+  align-items: center;
+  box-shadow: 6px 3px 20px -1px lightslategray;
+  position: sticky;
+  top: 0;
+}
+#canvas {
+  width: 98%;
+  height: 700px;
+  border: 10px solid transparent;
+}
+.rectangle {
+  border: 1px solid #ff0000;
+  position: absolute;
+}
+span {
+  color: black;
+  font-family: "Aclonica";
+  font-size: 18px;
+}
+
+button {
+  border: none;
+  width: 8rem;
+  height: 2rem;
+  padding: 5px;
+  border-radius: 3px;
+  background-color: #fc7028;
+  cursor: pointer;
+  margin-left: 5vw;
+}
+button:hover {
+  padding-right: 1px;
+  box-shadow: 0px 3px 4px -1px lightslategray;
+}
+i {
+  color: tomato;
+  cursor: pointer;
+  margin-left: 0;
+}
+button > i {
+  color: black;
+}
+
+#detail {
+  font-size: small;
+  color: tomato;
+  box-shadow: 1px 1px 3px 0px lightslategray;
+  padding: 2px 5px;
+  border: none;
+  margin-right: 0;
+  margin-top: 5em;
+}
+
+.delete {
+  display: flex;
+  align-items: center;
+}
+
+.active > i {
+  color: black;
+}
+
+.dialog {
+  font-size: small;
+  color: red;
+  box-shadow: 1px 1px 3px 0px lightslategray;
+  padding: 2px 5px;
+  border: none;
+  margin: 1;
+  position: sticky;
+  top: 0;
+}

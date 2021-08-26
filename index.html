@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="beginner">
+      Draw rectangles by clicking and dragging your mouse
+    </div>
+    <nav>
+      <span>Paint App</span>
+      <div class="delete">
+        <dialog id="detail">Click to delete any of the rectangle</dialog>
+        <div class="">
+          <i id="deleteOne" class="fas fa-minus-circle"></i>
+        </div>
+
+        <button>
+          <i class="fas fa-trash"></i>
+          Clear All
+        </button>
+      </div>
+    </nav>
+    <dialog class="dialog">
+      <i class="fas fa-exclamation"></i> Delete button is on, can't
+      draw....click the rectangle you want to delete
+    </dialog>
+    <div id="canvas"></div>
+    <script src="test.js"></script>
+  </body>
+</html>
