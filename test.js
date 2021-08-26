@@ -4,10 +4,14 @@ const deleteOne = document.querySelector("#deleteOne");
 const rectangles = document.querySelectorAll(".rectangle");
 const beginner = document.querySelector(".beginner");
 const undo = document.getElementById("undo")
+const close = document.getElementById("close")
+const help = document.querySelector(".help")
+const helpIcon = document.querySelector("#question");
+
 
 var mouse = {
   x: 0,
-  y: 0,
+  y: 0, 
   startX: 0,
   startY: 0,
 };
@@ -42,6 +46,14 @@ deleteOne.addEventListener("mouseover", () => {
   dialog.open = true;
 });
 
+close.addEventListener('click',()=>{
+ help.style.display = "none"
+})
+
+helpIcon.addEventListener('click',()=>{
+  help.style.display = "flex"
+})
+
 deleteOne.addEventListener("mouseout", () => {
   let dialog = document.querySelector(".del");
   dialog.open = false;
@@ -73,7 +85,6 @@ clearAll.addEventListener("click", () => {
 });
 
 canvas.addEventListener("mousemove",(e)=>{
-  beginner.remove()
   setMousePosition(e);
   if (element !== null) {
     
@@ -118,7 +129,7 @@ canvas.addEventListener("mouseup", () => {
 });
 
 canvas.addEventListener("click", () => {
-  beginner.remove();
+  
   if (element !== null) {
     element = null;
     canvas.style.cursor = "default";

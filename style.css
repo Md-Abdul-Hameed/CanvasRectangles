@@ -1,13 +1,14 @@
 body {
   margin: 0;
   box-sizing: border-box;
+  
   background-color: rgb(242, 242, 242);
 }
 
 .beginner {
-  position: absolute;
+  /* position: absolute;
   top: 50%;
-  left: 20%;
+  left: 20%; */
   font-size: 40px;
   font-weight: 200;
   color: tomato;
@@ -25,15 +26,17 @@ nav {
   box-shadow: 6px 3px 20px -1px lightslategray;
   position: sticky;
   top: 0;
+  
 }
 #canvas {
   width: 98%;
   height: 700px;
-  border: 10px solid transparent;
+
 }
 .rectangle {
   border: 1px solid #ff0000;
   position: absolute;
+  
 }
 span {
   color: black;
@@ -50,6 +53,7 @@ button {
   background-color: #fc7028;
   cursor: pointer;
   margin-left: 3vw;
+  margin-right: 3vw;
 }
 button:hover {
   padding-right: 1px;
@@ -96,4 +100,27 @@ button > i {
 
 #undo{
   margin-left: 3vw;
+}
+
+.help{
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  top:28vh;
+  border: none;
+  border-radius: 8px;
+  padding: 1%;
+  box-shadow: 10px 10px 5px -8px #000;
+  z-index: 5 ;
+  
+}
+li{
+  list-style: circle ;
+  margin: 1%;
+  font-family: "Aclonica";
+  font-size: 18px;
+
+}
+#close{
+align-self:flex-end ;
 }

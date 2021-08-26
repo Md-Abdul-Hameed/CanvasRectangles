@@ -8,9 +8,7 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="beginner">
-      Draw rectangles by clicking and dragging your mouse
-    </div>
+    
     <nav>
       <span>Paint App</span>
       <div class="delete">
@@ -24,13 +22,40 @@
           <i class="fas fa-trash"></i>
           Clear All
         </button>
+        <i id ="question" class="fas fa-question"></i>
       </div>
     </nav>
     <dialog class="dialog">
       <i class="fas fa-exclamation"></i> Delete button is on, can't
       draw....click the rectangle you want to delete
     </dialog> 
-    <div id="canvas"></div>
+    <div id="canvas" class = "canvas">
+      <dialog open class = "help">
+        <i id = "close" class="far fa-times-circle"></i>
+
+        <ul>
+          <li>
+            Click and drag to make new rectangles
+          </li>
+          <li>
+            Double click to delete any rectangle
+          </li>
+          <li>
+            Click and drag to change the position of any rectangle
+          </li>
+          <li>
+            Click clear All button to clear the canvas
+          </li>
+          <li>
+            Click DeleteMode icon to delete any rectangle on touch(in this mode you can't make new rectangles)
+          </li>
+          <li>
+            Click undo icon to undo the recent delete operation
+          </li>
+        </ul>
+      </dialog>
+      
+    </div>
     <script src="test.js"></script>
   </body>
 </html>
