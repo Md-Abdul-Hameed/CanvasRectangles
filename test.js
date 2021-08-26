@@ -4,6 +4,20 @@ const deleteOne = document.querySelector("#deleteOne");
 const rectangles = document.querySelectorAll(".rectangle");
 const beginner = document.querySelector(".beginner");
 
+var mouse = {
+  x: 0,
+  y: 0,
+  startX: 0,
+  startY: 0,
+};
+
+var element = null;
+var draggableRectangle = null
+
+beginner.addEventListener("click",()=>{
+  beginner.remove()
+})
+
 deleteOne.addEventListener("mouseover", () => {
   let dialog = document.getElementById("detail");
   dialog.open = true;
@@ -16,6 +30,7 @@ deleteOne.addEventListener("mouseout", () => {
 let deleteOneBtnClicked = false;
 
 deleteOne.addEventListener("click", () => {
+  beginner.remove()
   let warningDialog = document.getElementsByClassName("dialog");
   if (deleteOneBtnClicked) {
     deleteOne.parentNode.className = "";
@@ -29,12 +44,7 @@ deleteOne.addEventListener("click", () => {
   deleteOneBtnClicked = !deleteOneBtnClicked;
 });
 
-var mouse = {
-  x: 0,
-  y: 0,
-  startX: 0,
-  startY: 0,
-};
+
 
 clearAll[0].addEventListener("click", () => {
   canvas.innerHTML = null;
@@ -62,8 +72,8 @@ function setMousePosition(e) {
   }
 }
 
-var element = null;
 canvas.onmousemove = function (e) {
+  beginner.remove()
   setMousePosition(e);
   if (element !== null) {
     
@@ -73,8 +83,24 @@ canvas.onmousemove = function (e) {
       mouse.x - mouse.startX < 0 ? mouse.x + "px" : mouse.startX + "px";
     element.style.top =
       mouse.y - mouse.startY < 0 ? mouse.y + "px" : mouse.startY + "px";
-  }else{
-   
+  }else if(draggableRectangle !== null){
+    let widthInPx = draggableRectangle.style.width;
+    let heightInPx = draggableRectangle.style.height;
+    let width = ""
+    for(let i = widthInPx.length-3; i>=0;i--){
+      width = widthInPx[i] + width;
+    }
+    let height = ""
+    for(let i = heightInPx.length-3; i >= 0; i--){
+      height = heightInPx[i] + height
+    }
+    // console.log(height,heightInPx)
+    // console.log(width,widthInPx)
+    width = Number(width)
+    height = Number(height)
+
+   draggableRectangle.style.left = mouse.x - width + "px" 
+   draggableRectangle.style.top = mouse.y - height + "px"
   }
 };
 
@@ -87,7 +113,10 @@ canvas.addEventListener("mouseup", () => {
         lastChild.remove();
       }
     }
+  }else if(draggableRectangle !== null){
+    draggableRectangle = null;
   }
+
 });
 
 canvas.addEventListener("click", () => {
@@ -107,27 +136,7 @@ canvas.addEventListener("mousedown", function (e) {
     canvas.style.cursor = "default";
   } 
   else if(e.target.className=="rectangle"){
-    element = e.target;
-    let startXinPx = element.style.left;
-    let temp = ""
-    for(let i = startXinPx.length-3; i >=0 ;i--){
-      temp = startXinPx[i]+temp;
-    }
-
-    mouse.startX = temp;
-
-    let startYinPx = element.style.top;
-    temp = ""
-    for(let i = startYinPx.length-3; i >=0 ;i--){
-      temp = startYinPx[i]+temp;
-    }
-
-    mouse.startY = temp;
-    
-    
-    // mouse.startY = Number(element.style.top)
-    // element.style.left = mouse.x + "px";
-    // element.style.top = mouse.y + "px";
+    dragRectangle(e.target)
   }
   else {
     mouse.startX = mouse.x;
@@ -155,3 +164,7 @@ canvas.addEventListener("mousedown", function (e) {
     );
   }
 });
+
+function dragRectangle(rectangle){
+  draggableRectangle = rectangle 
+}
