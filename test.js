@@ -1,8 +1,9 @@
 const canvas = document.getElementById("canvas");
-const clearAll = document.getElementsByTagName("button");
+const clearAll = document.getElementById("button");
 const deleteOne = document.querySelector("#deleteOne");
 const rectangles = document.querySelectorAll(".rectangle");
 const beginner = document.querySelector(".beginner");
+const undo = document.getElementById("undo")
 
 var mouse = {
   x: 0,
@@ -13,24 +14,40 @@ var mouse = {
 
 var element = null;
 var draggableRectangle = null
+var deleteOneBtnClicked = false;
+var cache = []
 
-beginner.addEventListener("click",()=>{
-  beginner.remove()
-})
+function setMousePosition(e) {
+  var ev = e || window.event; 
+  if (ev.pageX) {
+    mouse.x = ev.pageX + window.pageXOffset;
+    mouse.y = ev.pageY + window.pageYOffset;
+  } else if (ev.clientX) {
+    mouse.x = ev.clientX + document.body.scrollLeft;
+    mouse.y = ev.clientY + document.body.scrollTop;
+  }
+}
+
+function getRandomColor() {
+  var letters = "0123456789ABCDEF";
+  var color = "#";
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
 
 deleteOne.addEventListener("mouseover", () => {
-  let dialog = document.getElementById("detail");
+  let dialog = document.querySelector(".del");
   dialog.open = true;
 });
+
 deleteOne.addEventListener("mouseout", () => {
-  let dialog = document.getElementById("detail");
+  let dialog = document.querySelector(".del");
   dialog.open = false;
 });
 
-let deleteOneBtnClicked = false;
-
 deleteOne.addEventListener("click", () => {
-  beginner.remove()
   let warningDialog = document.getElementsByClassName("dialog");
   if (deleteOneBtnClicked) {
     deleteOne.parentNode.className = "";
@@ -44,35 +61,18 @@ deleteOne.addEventListener("click", () => {
   deleteOneBtnClicked = !deleteOneBtnClicked;
 });
 
-
-
-clearAll[0].addEventListener("click", () => {
-  canvas.innerHTML = null;
+clearAll.addEventListener("click", () => {
+  let arr = []
+ let children = canvas.children;
+ let length = children.length
+  for(let i = 0; i < length ;i++){
+    arr.push(children[i])
+  }
+  canvas.innerHTML = null
+  cache.push(arr);
 });
 
-function getRandomColor() {
-  var letters = "0123456789ABCDEF";
-  var color = "#";
-  for (var i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-}
-
-function setMousePosition(e) {
-  var ev = e || window.event; //Moz || IE
-  if (ev.pageX) {
-    //Moz
-    mouse.x = ev.pageX + window.pageXOffset;
-    mouse.y = ev.pageY + window.pageYOffset;
-  } else if (ev.clientX) {
-    //IE
-    mouse.x = ev.clientX + document.body.scrollLeft;
-    mouse.y = ev.clientY + document.body.scrollTop;
-  }
-}
-
-canvas.onmousemove = function (e) {
+canvas.addEventListener("mousemove",(e)=>{
   beginner.remove()
   setMousePosition(e);
   if (element !== null) {
@@ -94,15 +94,13 @@ canvas.onmousemove = function (e) {
     for(let i = heightInPx.length-3; i >= 0; i--){
       height = heightInPx[i] + height
     }
-    // console.log(height,heightInPx)
-    // console.log(width,widthInPx)
     width = Number(width)
     height = Number(height)
 
    draggableRectangle.style.left = mouse.x - width + "px" 
    draggableRectangle.style.top = mouse.y - height + "px"
   }
-};
+}) 
 
 canvas.addEventListener("mouseup", () => {
   if (element !== null) {
@@ -124,10 +122,12 @@ canvas.addEventListener("click", () => {
   if (element !== null) {
     element = null;
     canvas.style.cursor = "default";
+  }else if(draggableRectangle!==null){
+    draggableRectangle = null;
   }
 });
 
-canvas.addEventListener("mousedown", function (e) {
+canvas.addEventListener("mousedown", (e) => {
   if (deleteOneBtnClicked) {
     return;
   }
@@ -136,7 +136,7 @@ canvas.addEventListener("mousedown", function (e) {
     canvas.style.cursor = "default";
   } 
   else if(e.target.className=="rectangle"){
-    dragRectangle(e.target)
+    draggableRectangle = e.target;
   }
   else {
     mouse.startX = mouse.x;
@@ -159,12 +159,33 @@ canvas.addEventListener("mousedown", function (e) {
     element.addEventListener(
       "dblclick",
       function (element) {
+        cache.push(element);
           element.remove();
       }.bind(null, element)
     );
   }
 });
 
-function dragRectangle(rectangle){
-  draggableRectangle = rectangle 
-}
+undo.addEventListener('click',()=>{
+  if(cache.length>0){
+    let elementToPush = cache[cache.length-1]
+    if(Array.isArray(elementToPush)){
+      elementToPush.forEach(element => {
+        canvas.appendChild(element)
+      });
+    }else{
+      canvas.appendChild(elementToPush)
+    }
+    cache.pop()
+  }
+})
+
+undo.addEventListener('mouseover',()=>{
+  let dialog = document.querySelector(".undo");
+  dialog.open = true;
+})
+
+undo.addEventListener('mouseout',()=>{
+  let dialog = document.querySelector(".undo");
+  dialog.open = false;
+})

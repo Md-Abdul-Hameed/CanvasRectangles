@@ -49,7 +49,7 @@ button {
   border-radius: 3px;
   background-color: #fc7028;
   cursor: pointer;
-  margin-left: 5vw;
+  margin-left: 3vw;
 }
 button:hover {
   padding-right: 1px;
@@ -92,4 +92,8 @@ button > i {
   margin: 1;
   position: sticky;
   top: 0;
+}
+
+#undo{
+  margin-left: 3vw;
 }
