@@ -66,12 +66,15 @@ var element = null;
 canvas.onmousemove = function (e) {
   setMousePosition(e);
   if (element !== null) {
+    
     element.style.width = Math.abs(mouse.x - mouse.startX) + "px";
     element.style.height = Math.abs(mouse.y - mouse.startY) + "px";
     element.style.left =
       mouse.x - mouse.startX < 0 ? mouse.x + "px" : mouse.startX + "px";
     element.style.top =
       mouse.y - mouse.startY < 0 ? mouse.y + "px" : mouse.startY + "px";
+  }else{
+   
   }
 };
 
@@ -102,7 +105,31 @@ canvas.addEventListener("mousedown", function (e) {
   if (element !== null) {
     element = null;
     canvas.style.cursor = "default";
-  } else {
+  } 
+  else if(e.target.className=="rectangle"){
+    element = e.target;
+    let startXinPx = element.style.left;
+    let temp = ""
+    for(let i = startXinPx.length-3; i >=0 ;i--){
+      temp = startXinPx[i]+temp;
+    }
+
+    mouse.startX = temp;
+
+    let startYinPx = element.style.top;
+    temp = ""
+    for(let i = startYinPx.length-3; i >=0 ;i--){
+      temp = startYinPx[i]+temp;
+    }
+
+    mouse.startY = temp;
+    
+    
+    // mouse.startY = Number(element.style.top)
+    // element.style.left = mouse.x + "px";
+    // element.style.top = mouse.y + "px";
+  }
+  else {
     mouse.startX = mouse.x;
     mouse.startY = mouse.y;
     element = document.createElement("div");
@@ -118,6 +145,12 @@ canvas.addEventListener("mousedown", function (e) {
         if (deleteOneBtnClicked) {
           element.remove();
         }
+      }.bind(null, element)
+    );
+    element.addEventListener(
+      "dblclick",
+      function (element) {
+          element.remove();
       }.bind(null, element)
     );
   }
