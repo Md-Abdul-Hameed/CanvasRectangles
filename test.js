@@ -129,7 +129,6 @@ canvas.addEventListener("mouseup", () => {
 });
 
 canvas.addEventListener("click", () => {
-  
   if (element !== null) {
     element = null;
     canvas.style.cursor = "default";
@@ -139,6 +138,7 @@ canvas.addEventListener("click", () => {
 });
 
 canvas.addEventListener("mousedown", (e) => {
+  help.style.display="none"
   if (deleteOneBtnClicked) {
     return;
   }
